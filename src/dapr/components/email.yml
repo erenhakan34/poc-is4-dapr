@@ -1,0 +1,20 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: sendmail
+spec:
+  type: bindings.smtp
+  version: v1
+  metadata:
+  - name: host
+    value: smtp-mail.outlook.com
+  - name: port
+    value: 587
+  - name: user
+    value: "kbxototest3@outlook.com"
+  - name: password
+    value: "Ba842953"
+  - name: skipTLSVerify
+    value: false
+scopes:
+  - notification
