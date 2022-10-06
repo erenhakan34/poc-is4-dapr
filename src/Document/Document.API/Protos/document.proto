@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService";
+
+package documents;
+
+
+service DocumentGrpc{
+  rpc GetDocument (GetDocumentRequest) returns (GetDocumentDataResponse);
+}
+
+message GetDocumentRequest{
+  string UserId = 1;
+}
+
+message GetDocumentDataResponse{
+  repeated GetDocumentSingleResponse items = 1;
+}
+message GetDocumentSingleResponse{
+  string Id = 1;
+  string Name = 2;
+}

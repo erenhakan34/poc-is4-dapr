@@ -17,12 +17,18 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.8" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+      <PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\Shared\Core\Core.csproj" />
       <ProjectReference Include="..\Document.Application\Document.Application.csproj" />
       <ProjectReference Include="..\Document.Data\Document.Data.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Protos\document.proto" />
+      <Protobuf Include="Protos\document.proto" />
     </ItemGroup>
 
 </Project>

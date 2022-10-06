@@ -9,6 +9,7 @@ namespace Notification.API.Controllers;
 [Route("[controller]")]
 public class NotificationController : ControllerBase
 {
+    private const string DAPR_PUBSUB_NAME = "daprpoc-pubsub";
     private readonly ILogger<NotificationController> _logger;
     private readonly EmailSender _emailSender;
 
@@ -18,11 +19,21 @@ public class NotificationController : ControllerBase
         this._emailSender = emailSender;
     }
 
-    [HttpPost("", Name = "SubmitUserRegister")]
-    [Topic("pubsub", "notifications")]
+    [HttpPost("/SubmitUserRegister")]
+    [Topic(DAPR_PUBSUB_NAME, "UserRegistered")]
     public async Task<IActionResult> Submit(UserRegistered registered)
     {
         _logger.LogInformation($"Received a new register from {registered.FullName}");
+        await _emailSender.SendEmailForOrder(registered);
+        return Ok();
+    }
+    
+    
+    [HttpPost("/SubmitSmsOtp")]
+    [Topic(DAPR_PUBSUB_NAME, "SmsOtp")]
+    public async Task<IActionResult> Submit(SmsOtp registered)
+    {
+        _logger.LogInformation($"Received a new otpfrom {registered.Email}");
         await _emailSender.SendEmailForOrder(registered);
         return Ok();
     }

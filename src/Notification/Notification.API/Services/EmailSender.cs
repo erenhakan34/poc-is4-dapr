@@ -35,4 +35,27 @@ public class EmailSender
         await daprClient.InvokeBindingAsync("sendmail", "create", 
             body, metadata);        
     }
+    
+    public async Task SendEmailForOrder(SmsOtp user)
+    {
+        logger.LogInformation($"Received a new user otp for {user.code} {user.Email}");
+
+        var daprEnabled = !String.IsNullOrEmpty(Environment.GetEnvironmentVariable("DAPR_HTTP_PORT"));
+        if (!daprEnabled) 
+        { 
+            logger.LogWarning("Not using Dapr so no email sent");
+            return;
+        }
+        
+        logger.LogInformation($"Sending email");
+        var metadata = new Dictionary<string, string>
+        {
+            ["emailFrom"] = "kbxototest3@outlook.com",
+            ["emailTo"] = user.Email,
+            ["subject"] = $"Sms Otp"
+        };
+        var body = $"<h2>Your otp {user.code} </h2>";
+        await daprClient.InvokeBindingAsync("sendmail", "create", 
+            body, metadata);        
+    }
 }

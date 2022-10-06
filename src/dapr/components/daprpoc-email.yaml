@@ -11,10 +11,10 @@ spec:
   - name: port
     value: 587
   - name: user
-    value: "kbxototest3@outlook.com"
+    value: 
   - name: password
-    value: "Ba842953"
+    value: 
   - name: skipTLSVerify
     value: false
-scopes:
-  - notification
+auth:
+  secretStore: daprpoc-secretstore

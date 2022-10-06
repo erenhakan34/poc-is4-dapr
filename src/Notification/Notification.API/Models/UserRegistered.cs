@@ -1,7 +1,8 @@
+using DaprPoc.BuildingBlocks.EventBus.Events;
+
 namespace Notification.API.Models;
 
-public class UserRegistered
-{
-    public string FullName { get; set; }
-    public string Email { get; set; }
-}
+public record UserRegistered(string FullName,string Email) : IntegrationEvent;
+
+
+public record SmsOtp(string code,string Email) : IntegrationEvent;

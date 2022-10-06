@@ -1,0 +1,29 @@
+apiVersion: dapr.io/v1alpha1
+kind: Resiliency
+metadata:
+  name: resiliencyConfig
+spec:
+  policies:
+    retries:
+      pubsubRetry:
+        policy: constant
+        duration: 10s
+        maxRetries: 3
+    
+      5Retries:
+        policy: constant
+        duration: 10s
+        maxRetries: 5
+  targets:
+    apps:
+      documents:
+        retry: 5Retries
+      auth:
+        retry: 5Retries
+
+    components:
+      pubsub:
+        outbound:
+          retry: pubsubRetry
+        inbound:
+          retry: pubsubRetry

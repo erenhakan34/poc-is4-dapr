@@ -8,14 +8,22 @@ namespace Document.API.Controllers;
 public class DocumentsController : ControllerBase
 {
     private readonly IDocumentRepository _documentRepository;
-
-    public DocumentsController(IDocumentRepository documentRepository)
+    private readonly IUserDocumentRepository _userDocumentRepository;
+    public DocumentsController(IDocumentRepository documentRepository, IUserDocumentRepository userDocumentRepository)
     {
         _documentRepository = documentRepository;
+        _userDocumentRepository = userDocumentRepository;
     }
 
     [HttpGet("all")]
     public async Task<ActionResult> GetAll()
+    {
+        var result = await _documentRepository.GetAll();
+        return Ok(result);
+    }
+    
+    [HttpGet("items/by_userid")]
+    public async Task<ActionResult> ItemsAsync([FromQuery] string id)
     {
         var result = await _documentRepository.GetAll();
         return Ok(result);
